@@ -13,14 +13,59 @@
             padding: 0;
             height: 100%;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6E7DFF, #28D0B5);
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: #6E7DFF;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* الفقاعات المتحركة في الخلفية */
+        .bubble {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: bubbleMove 10s infinite ease-in-out;
+        }
+
+        /* حركة الفقاعات عبر الشاشة */
+        @keyframes bubbleMove {
+            0% {
+                transform: scale(0.5);
+                top: -10%;
+                left: -10%;
+                opacity: 0.3;
+            }
+            25% {
+                transform: scale(1.2);
+                top: 40%;
+                left: 30%;
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(0.8);
+                top: 80%;
+                left: 60%;
+                opacity: 0.3;
+            }
+            75% {
+                transform: scale(1);
+                top: 20%;
+                left: 80%;
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(0.5);
+                top: -10%;
+                left: -10%;
+                opacity: 0.3;
+            }
         }
 
         /* تحديد التنسيق للفريم المحتوي لجميع العناصر */
         .container {
+            position: relative;
             background: #fff;
             padding: 40px;
             border-radius: 12px;
@@ -32,13 +77,14 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 1;
         }
 
         /* تنسيق العنوان */
         h1 {
             font-size: 28px;
             font-weight: 600;
-            margin-bottom: 10px; /* تقليل المسافة أسفل العنوان */
+            margin-bottom: 10px;
             color: #f70707;
         }
 
@@ -46,7 +92,7 @@
         .qr-label {
             font-size: 20px;
             color: #010211;
-            margin-bottom: 30px; /* مسافة بين كلمة QR Code وبقية العناصر */
+            margin-bottom: 30px;
         }
 
         /* تنسيق الحقل النصي */
@@ -103,7 +149,7 @@
             height: 250px;
             max-height: 300px;
             overflow: hidden;
-            margin: 0 auto; /* توسيط QR Code */
+            margin: 0 auto;
         }
 
         /* تنسيق الجزء السفلي (footer) */
@@ -115,11 +161,20 @@
 
         .footer a {
             text-decoration: none;
-            color: #f70707;
+            color: #fa0707;
         }
     </style>
 </head>
 <body>
+
+<!-- إنشاء العديد من الفقاعات -->
+<div class="bubble" style="width: 50px; height: 50px; animation-delay: 0s;"></div>
+<div class="bubble" style="width: 60px; height: 60px; animation-delay: 2s;"></div>
+<div class="bubble" style="width: 40px; height: 40px; animation-delay: 4s;"></div>
+<div class="bubble" style="width: 70px; height: 70px; animation-delay: 6s;"></div>
+<div class="bubble" style="width: 30px; height: 30px; animation-delay: 1s;"></div>
+<div class="bubble" style="width: 55px; height: 55px; animation-delay: 3s;"></div>
+<div class="bubble" style="width: 45px; height: 45px; animation-delay: 5s;"></div>
 
 <div class="container">
     <h1>حرفوش لتحويل الروابط الى </h1>
