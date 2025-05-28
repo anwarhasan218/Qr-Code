@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        /* التأكد من أن الصفحة كاملة تأخذ المساحة الكاملة للعرض والارتفاع */
         html, body {
             margin: 0;
             padding: 0;
@@ -21,49 +20,6 @@
             position: relative;
         }
 
-        /* الفقاعات المتحركة في الخلفية */
-        .bubble {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: bubbleMove 10s infinite ease-in-out;
-        }
-
-        /* حركة الفقاعات عبر الشاشة */
-        @keyframes bubbleMove {
-            0% {
-                transform: scale(0.5);
-                top: -10%;
-                left: -10%;
-                opacity: 0.3;
-            }
-            25% {
-                transform: scale(1.2);
-                top: 40%;
-                left: 30%;
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(0.8);
-                top: 80%;
-                left: 60%;
-                opacity: 0.3;
-            }
-            75% {
-                transform: scale(1);
-                top: 20%;
-                left: 80%;
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(0.5);
-                top: -10%;
-                left: -10%;
-                opacity: 0.3;
-            }
-        }
-
-        /* تحديد التنسيق للفريم المحتوي لجميع العناصر */
         .container {
             position: relative;
             background: #fff;
@@ -80,7 +36,6 @@
             z-index: 1;
         }
 
-        /* تنسيق العنوان */
         h1 {
             font-size: 28px;
             font-weight: 600;
@@ -88,14 +43,12 @@
             color: #f70707;
         }
 
-        /* تنسيق كلمة QR Code */
         .qr-label {
             font-size: 20px;
             color: #010211;
             margin-bottom: 30px;
         }
 
-        /* تنسيق الحقل النصي */
         .input-container {
             margin-bottom: 30px;
             position: relative;
@@ -103,21 +56,19 @@
         }
 
         .input-container input {
-            width: 80%; /* تحديد العرض بنسبة */
+            width: 80%;
             padding: 15px 20px;
             border-radius: 10px;
             border: 1px solid #ddd;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.3s;
-            margin: 0 auto; /* توسيط حقل الإدخال */
+            margin: 0 auto;
         }
 
         .input-container input:focus {
             border-color: #6E7DFF;
         }
 
-        /* تنسيق الزر */
         .btn-custom {
             padding: 15px 25px;
             background-color: #6E7DFF;
@@ -126,7 +77,6 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
             margin: 10px auto;
         }
 
@@ -134,7 +84,6 @@
             background-color: #4C5ED5;
         }
 
-        /* تنسيق الـ QR Code */
         #qr-code {
             margin-top: 20px;
             border: 2px solid #ddd;
@@ -152,7 +101,6 @@
             margin: 0 auto;
         }
 
-        /* تنسيق الجزء السفلي (footer) */
         .footer {
             margin-top: 30px;
             font-size: 14px;
@@ -167,24 +115,15 @@
 </head>
 <body>
 
-<!-- إنشاء العديد من الفقاعات -->
-<div class="bubble" style="width: 50px; height: 50px; animation-delay: 0s;"></div>
-<div class="bubble" style="width: 60px; height: 60px; animation-delay: 2s;"></div>
-<div class="bubble" style="width: 40px; height: 40px; animation-delay: 4s;"></div>
-<div class="bubble" style="width: 70px; height: 70px; animation-delay: 6s;"></div>
-<div class="bubble" style="width: 30px; height: 30px; animation-delay: 1s;"></div>
-<div class="bubble" style="width: 55px; height: 55px; animation-delay: 3s;"></div>
-<div class="bubble" style="width: 45px; height: 45px; animation-delay: 5s;"></div>
-
 <div class="container">
     <h1>حرفوش لتحويل الروابط الى </h1>
-    <!-- إضافة كلمة QR Code في سطر أسفل العنوان -->
     <p class="qr-label">QR Code</p>
     <div class="input-container">
         <input type="text" id="link-input" placeholder="أدخل الرابط هنا" />
     </div>
     <button class="btn-custom" onclick="generateQRCode()">إنشاء QR Code</button>
     <div id="qr-code"></div>
+    <button class="btn-custom" onclick="downloadQRCode()">تحميل QR Code</button>
     <div class="footer">
         <p>تصميم بواسطة <a href="https://www.facebook.com/anwarhassanharfoush/" target="_blank">HarfousH</a></p>
     </div>
@@ -192,7 +131,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
 <script>
+    var qrCodeCanvas;
+
     function generateQRCode() {
         var link = document.getElementById("link-input").value;
         if (link) {
@@ -200,10 +142,25 @@
             var qrCode = new QRCode(document.getElementById("qr-code"), {
                 text: link,
                 width: 200,
-                height: 200
+                height: 200,
+                correctLevel: QRCode.CorrectLevel.L
             });
+
+            // حفظ الكود كـ canvas لاستخدامه لاحقًا في التحميل
+            qrCodeCanvas = document.querySelector("#qr-code canvas");
         } else {
             alert("من فضلك أدخل رابطًا لتحويله!");
+        }
+    }
+
+    function downloadQRCode() {
+        if (qrCodeCanvas) {
+            var link = document.createElement('a');
+            link.href = qrCodeCanvas.toDataURL("image/png");
+            link.download = "qr-code.png";
+            link.click();
+        } else {
+            alert("الرجاء إنشاء الكود أولاً!");
         }
     }
 </script>
