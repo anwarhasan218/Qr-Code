@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحويل الرابط إلى QR Code</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* التأكد من أن الصفحة كاملة تأخذ المساحة الكاملة للعرض والارتفاع */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #6E7DFF, #28D0B5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* تحديد التنسيق للفريم المحتوي لجميع العناصر */
+        .container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* تنسيق العنوان */
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px; /* تقليل المسافة أسفل العنوان */
+            color: #333;
+        }
+
+        /* تنسيق كلمة QR Code */
+        .qr-label {
+            font-size: 20px;
+            color: #6E7DFF;
+            margin-bottom: 30px; /* مسافة بين كلمة QR Code وبقية العناصر */
+        }
+
+        /* تنسيق الحقل النصي */
+        .input-container {
+            margin-bottom: 30px;
+            position: relative;
+            width: 100%;
+        }
+
+        .input-container input {
+            width: 80%; /* تحديد العرض بنسبة */
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+            margin: 0 auto; /* توسيط حقل الإدخال */
+        }
+
+        .input-container input:focus {
+            border-color: #6E7DFF;
+        }
+
+        /* تنسيق الزر */
+        .btn-custom {
+            padding: 15px 25px;
+            background-color: #6E7DFF;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px auto;
+        }
+
+        .btn-custom:hover {
+            background-color: #4C5ED5;
+        }
+
+        /* تنسيق الـ QR Code */
+        #qr-code {
+            margin-top: 20px;
+            border: 2px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            max-height: 300px;
+            overflow: hidden;
+            margin: 0 auto; /* توسيط QR Code */
+        }
+
+        /* تنسيق الجزء السفلي (footer) */
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .footer a {
+            text-decoration: none;
+            color: #28D0B5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>حرفوش لتحويل الروابط الى </h1>
+    <!-- إضافة كلمة QR Code في سطر أسفل العنوان -->
+    <p class="qr-label">QR Code</p>
+    <div class="input-container">
+        <input type="text" id="link-input" placeholder="أدخل الرابط هنا" />
+    </div>
+    <button class="btn-custom" onclick="generateQRCode()">إنشاء QR Code</button>
+    <div id="qr-code"></div>
+    <div class="footer">
+        <p>تصميم بواسطة <a href="https://www.facebook.com/anwarhassanharfoush/" target="_blank">HarfousH</a></p>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<script>
+    function generateQRCode() {
+        var link = document.getElementById("link-input").value;
+        if (link) {
+            document.getElementById("qr-code").innerHTML = "";
+            var qrCode = new QRCode(document.getElementById("qr-code"), {
+                text: link,
+                width: 200,
+                height: 200
+            });
+        } else {
+            alert("من فضلك أدخل رابطًا لتحويله!");
+        }
+    }
+</script>
+
+</body>
+</html>
